@@ -10,12 +10,11 @@ import sys
 
 
 def get_images_from_excel(excel_file):
-    out_zip = zipfile.ZipFile(document_title + ".reqifz", 'w', zipfile.ZIP_DEFLATED)
-
     in_excel = zipfile.ZipFile(excel_file)
-
     if "xl/drawings/drawing1.xml" not in in_excel.namelist():
         return []
+    
+    out_zip = zipfile.ZipFile(document_title + ".reqifz", 'w', zipfile.ZIP_DEFLATED)
 
     ns = "{http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing}"
     a_ns = "{http://schemas.openxmlformats.org/drawingml/2006/main}"
