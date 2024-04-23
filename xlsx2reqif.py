@@ -24,18 +24,12 @@ def get_images_from_excel(excel_file, output_file):
     drawing_tree = xml.etree.ElementTree.parse(drawing_source)
     drawing_root = drawing_tree.getroot()
 
-    images = []
-    for anchor in drawing_root:
-        row = None
-        col = None
-        img_ref = None
+    images = [{"row":int(anchor.find(ns + "from/" + ns + "row").text),
+               "col": int(anchor.find(ns + "from/" + ns + "col").text),
+               "img_ref": anchor.find(ns + "pic/" + ns + "blipFill/" + a_ns + "blip").attrib[
+            "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed"]}
+            for anchor in drawing_root]
 
-        row = anchor.find(ns + "from/" + ns + "row").text
-        col = anchor.find(ns + "from/" + ns + "col").text
-        img_ref = anchor.find(ns + "pic/" + ns + "blipFill/" + a_ns + "blip").attrib[
-            "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed"]
-
-        images.append({"row": int(row), "col": int(col), "img_ref": img_ref})
     drawing_source.close()
     drawing_links_source = in_excel.open("xl/drawings/_rels/drawing1.xml.rels")
     drawing_links_tree = xml.etree.ElementTree.parse(drawing_links_source)
