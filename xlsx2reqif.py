@@ -9,7 +9,7 @@ import io
 import sys
 
 
-def get_images_from_excel(excel_file, output_file):
+def get_images_from_excel(excel_file):
     out_zip = zipfile.ZipFile(document_title + ".reqifz", 'w', zipfile.ZIP_DEFLATED)
 
     in_excel = zipfile.ZipFile(excel_file)
@@ -60,9 +60,8 @@ def get_images(images, row, col):
 file_name = sys.argv[1]
 
 document_title, _ = os.path.splitext(os.path.basename(file_name))
-output_file = document_title + ".reqifz"
 
-images = get_images_from_excel(file_name, output_file)
+images = get_images_from_excel(file_name)
 wb = openpyxl.load_workbook(file_name)
 ws = wb.active
 
