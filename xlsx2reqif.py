@@ -65,9 +65,7 @@ images = get_images_from_excel(file_name)
 wb = openpyxl.load_workbook(file_name)
 ws = wb.active
 
-columns = []
-for col_nr in range(1, ws.max_column + 1):
-    columns.append(ws.cell(1, col_nr).value)
+columns = [ws.cell(1, col_nr).value for col_nr in range(1, ws.max_column+1)]
 
 document_reqif_id = "_{}ReqifId-Header".format(document_title)
 spec_reqif_id = "_{}ReqifId--spec".format(document_title)
